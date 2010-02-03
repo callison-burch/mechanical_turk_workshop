@@ -1,0 +1,67 @@
+<h1>Highlight clicked word</h1>
+
+
+<style>
+<!-- 
+span.white { background-color: #FFFFFF; }
+span.highlight  { background-color: yellow; }
+
+A:link {text-decoration: none; color: black;}
+A:visited {text-decoration: none; color: black;}
+A:active {text-decoration: none; color: black;}
+A:hover {text-decoration: none; color: black;}
+//-->
+</style>
+
+<script type="text/Javascript">
+	var sentence = "This is a test .";
+	var words = sentence.split(/\s/);
+	var initialhighlights = "";
+	var highlights = initalizeBooleanArray(words.length, initialhighlights);
+	writeSentence(words);
+	
+	function initalizeBooleanArray(length, indexOfTruesString) {
+		var array = new Array(length);
+		for (i = 0; i < array.length; i++) {
+			array[i] = false;
+		}
+		return array;
+	}
+
+	// This method wraps every word in a sentence with a javascript click function.
+	function writeSentence(words) {
+		for(i = 0; i < words.length; i++) {
+			var word = words[i];
+			document.write('<span class="white" id="word.' + i + '">');
+			document.write('<a href="javascript:clickWord(' + i + ')"> ');
+			document.write(word);
+			document.write('</a>');
+			document.write('</span>');
+		}
+	}
+
+	
+	function clickWord(x) { 
+		highlights[x] = (!highlights[x]);
+		var y = 0;
+		var word = document.getElementById("word."+x);
+		if(highlights[x]) {
+			word.className = "highlight";
+		} else {
+			word.className = "white";
+		} 
+		
+	}
+	
+</script>
+
+
+
+<form name="mturk_form" method="get" action="edit">
+	<input type=hidden name=highlights value="unchanged" />
+	<br><font size=-1 color=gray>Comments</font><br>	
+	<textarea name=comment rows=5 cols=30> </textarea> 
+	<br>
+
+	<input type=submit name="submit" value="Submit">
+</form>
